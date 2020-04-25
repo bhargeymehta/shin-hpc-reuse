@@ -118,8 +118,8 @@ if __name__ == "__main__":
                     algName,algApp,N,P,e2eX,e2eY,algX,algY = out.split(',')
 
                     # below code is from 'text_to_csv.py from original letshpc'
-                    algTime = (float(algX)+float(algY)) / 1e9
-                    e2eTime = (float(e2eX)+float(e2eY)) / 1e9
+                    algTime = float(algX) + float(algY) / 1e9
+                    e2eTime = float(e2eX) + float(e2eY) / 1e9
                     ###########################################################
 
                     algTime = str(algTime)
