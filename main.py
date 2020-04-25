@@ -82,7 +82,7 @@ if __name__ == "__main__":
                         try:
                             n, p, r, a, e = line.split(',')
                             n, p, r = int(n), int(p), int(r)
-                            probSizeIndx = config.prob.index(n)
+                            probSizeIndx = config.prob.index(n)+1
                             procNumIndx = config.procs.index(p)
                             rid = r
                             if rid == runs:
