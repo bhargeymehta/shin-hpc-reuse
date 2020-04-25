@@ -11,8 +11,8 @@ def removeFile(file):
     out, err = Popen('rm '+file, stdout=PIPE, stderr=PIPE, shell=True).communicate()
     out = out.strip()
     err = err.strip()
-    if err != '':
-        raise Exception(err)
+    if err != '' or out != '':
+        raise Exception(err+'\n'+out)
     
     return "File "+file+" was removed"
 
