@@ -7,15 +7,12 @@ import config
 def removeFile(file):
     if file not in os.listdir(os.curdir):
         return "File "+file+" wasn't present: ignoring"
-    try:
-        out, err = Popen('rm '+file, stdout=PIPE, stderr=PIPE, shell=True).communicate()
-        out = out.strip()
-        err = err.strip()
-        if err != '':
-            raise Exception(err)
-    except:
-        print "Error while removing", file, str(err)
-        exit()
+
+    out, err = Popen('rm '+file, stdout=PIPE, stderr=PIPE, shell=True).communicate()
+    out = out.strip()
+    err = err.strip()
+    if err != '':
+        raise Exception(err)
     
     return "File "+file+" was removed"
 
@@ -24,31 +21,35 @@ def removeFile(file):
 # provided the exec is absent when it is called
 def compileFile(file):
     if file not in os.listdir(os.curdir):
-        print "File", file, "is absent, can't proceed: exiting"
-        exit()
-    try:
-        file_name = file.split('.')[0]
-        out, err = Popen('gcc -o '+file_name+' '+file+' -fopenmp', stdout=PIPE, stderr=PIPE, shell=True).communicate()
-        out = out.strip()
-        err = err.strip()
-        if file_name not in os.listdir(os.curdir):
-            print "File", file, "wasn't compiled: exiting"
-            print out
-            print err
-            exit()
-    except:
-        pass
+        err = "File "+file+" is absent, can't proceed"
+        raise Exception(err)
+
+    file_name = file.split('.')[0]
+    out, err = Popen('gcc -o '+file_name+' '+file+' -fopenmp', stdout=PIPE, stderr=PIPE, shell=True).communicate()
+    out = out.strip()
+    err = err.strip()
+    if file_name not in os.listdir(os.curdir):
+        print out
+        print err
+        err = "File "+file+" wasn't compiled"
+        raise Exception(err)
+            
     
     return "File "+file+" was compiled"
 
-    
-if __name__ == '__main__':
-    # remove the previous execs and recompile
-    print removeFile('serial')
-    print removeFile('parallel')
 
-    print compileFile('serial.c')
-    print compileFile('parallel.c')
+
+if __name__ == "__main__":
+    # remove the previous execs and recompile
+    try:
+        print removeFile('serial')
+        print removeFile('parallel')
+
+        print compileFile('serial.c')
+        print compileFile('parallel.c')
+    except Exception as e:
+        print e, ":exiting"
+        exit()
 
     print "*"*80
 
@@ -61,7 +62,7 @@ if __name__ == '__main__':
             runs = int(raw_input('Number of runs: '))
         except:
             pass
-    
+
     print "Warning: if configs have changed, don't reuse!"
     while reuse != 'n' and reuse != 'y':
         reuse = raw_input('Reuse previous data? (y/n): ')
