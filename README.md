@@ -4,6 +4,7 @@
 - write your code in serial.c and parallel.c in the specified region
 - edit the config.py file as per needed
 - the script deletes the executables on each run and recompiles
+- put the partial runs into a folder named 'fragments' and run merge.py, output file will be named 'data-merged.txt'
 
 ### Warnings
 - don't reuse if the config file changed in between the runs
