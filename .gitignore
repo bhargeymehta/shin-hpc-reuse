@@ -2,3 +2,5 @@ config.pyc
 parallel
 serial
 data.txt
+/__pycache__
+/fragments
