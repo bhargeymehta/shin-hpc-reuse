@@ -101,7 +101,7 @@ if __name__ == "__main__":
             for n in range(probSizeIndx, len(config.prob)):
                 print "Problem Size:", config.prob[n]
 
-                if p == 0:
+                if config.procs[p] == 0:
                     cmd = './serial '+str(config.prob[n])+' ' + str(config.procs[p])
                 else:
                     cmd = './parallel '+str(config.prob[n])+' ' + str(config.procs[p])
